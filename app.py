@@ -81,7 +81,7 @@ if run_btn:
     preds = multi_step_recursive(last2_raw, int(days_to_predict), model, scaler)
 
     # OUTPUT DETAIL TEKS
-    st.markdown("### 📋 **Detail Perhitungan Prediksi per Hari**")
+    st.markdown("### **Detail Perhitungan Prediksi per Hari**")
 
     st.markdown(f"""
 **Data 2 hari terakhir (Original):**
@@ -148,7 +148,7 @@ if run_btn:
         df_out["NO2(µg/m³)"] = df_out["NO2(mol/m²)"].apply(to_ugm3)
     df_out["Status"] = np.where(df_out["NO2(mol/m²)"] > threshold, "BERBAHAYA", "AMAN")
 
-    st.markdown("### 📊 Visualisasi Nilai NO₂ (2 Hari Sebelumnya + Prediksi)")
+    st.markdown("### Visualisasi Nilai NO₂ (2 Hari Sebelumnya + Prediksi)")
     colors = ["#2E86AB", "#2E86AB"] + ["red" if s == "BERBAHAYA" else "green" for s in df_out["Status"][2:]]
 
     fig = go.Figure()
@@ -177,11 +177,11 @@ if run_btn:
     st.plotly_chart(fig, use_container_width=True)
 
     # TABEL + DOWNLOAD
-    st.markdown("### 📄 Data Lengkap")
+    st.markdown("### Data Lengkap")
     st.dataframe(df_out.style.format({
         "NO2(mol/m²)": "{:.8f}",
         "NO2(µg/m³)": "{:.4f}",
     }), use_container_width=True)
 
     csv_out = df_out.to_csv(index=False).encode('utf-8')
-    st.download_button("💾 Unduh hasil (CSV)", csv_out, "no2_multi_forecast.csv", "text/csv")
+    st.download_button("Unduh hasil (CSV)", csv_out, "no2_multi_forecast.csv", "text/csv")
